@@ -35,4 +35,4 @@ def getFriendList(steamid):
 		os.remove("TEMPfriends.json")
 	print("done")
 
-getFriendList("76561198967207139")
+getFriendList("76561198199384013")
