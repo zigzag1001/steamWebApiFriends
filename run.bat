@@ -1,1 +1,1 @@
-python steamWebApi.py
+python getDataAndWrite.py
