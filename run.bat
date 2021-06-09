@@ -1,1 +1,1 @@
-python getDataAndWrite.py
+python Run.py

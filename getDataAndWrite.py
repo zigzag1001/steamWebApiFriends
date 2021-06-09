@@ -5,12 +5,37 @@ import time
 
 # file path for steam id jsons
 filePath = "./people/"
-key = input("paste in key:\n")
 
 startTime = time.time()
 seenUsers = []
 usersSeenTwice = 0
 uniqueUsers = 0
+
+def main():
+	# id = "76561198967207139"
+	key = input("api key:\n")
+	id = input("id: ")
+	
+	print("started")
+	
+	# generates initial json file with friends of input id
+	writeToFile(getFriendList(id), id)
+	
+	# gets friends of friends and dumps into the same json file
+	toDump = getFoF(id)
+	with open(filePath + id + ".json", "w") as file:
+		json.dump(toDump, file, indent = 2)
+	
+	input("press enter to continue to big boi")
+	print("started big boi")
+	
+	toDump = getFoFoF(id)
+	with open(filePath + id + ".json", "w") as file:
+		json.dump(toDump, file, indent = 2)
+	
+	print("last task done in", time.time()-startTime)
+	print("unique users:",uniqueUsers)
+	print("skipped users:",usersSeenTwice)
 
 # gets friends of input steam id, returns dict
 def getFriendList(steamid):
@@ -90,36 +115,18 @@ def getFoFoF(fileName):
 	with open(filePath + fileName) as f:
 		ids = json.load(f)
 		copy = ids
+		i = 0
 		for id in ids:
 			for idd in ids[id]:
 				ids[id][idd] = getFriendList(idd)
 			with open(filePath + fileName, "w") as n:
 				json.dump(ids, n, indent = 2)
-				if os.path.getsize(filePath+fileName) > 10000000:
-					return ids
+				# if os.path.getsize(filePath+fileName) > 10000000:
+				# 	return ids
+			i += 1
+			print("last task done in", time.time()-startTime)
+			print(i, "/", len(ids))
+			print("unique users:",uniqueUsers)
+			print("skipped users:",usersSeenTwice)
 		# print("===")
 		return ids
-
-# steamid
-id = "76561198967207139"
-
-print("started")
-
-# generates initial json file with friends of input id
-writeToFile(getFriendList(id), id)
-
-# gets friends of friends and dumps into the same json file
-toDump = getFoF(id)
-with open(filePath + id + ".json", "w") as file:
-	json.dump(toDump, file, indent = 2)
-
-input("press enter to continue to big boi")
-print("started big boi")
-
-toDump = getFoFoF(id)
-with open(filePath + id + ".json", "w") as file:
-	json.dump(toDump, file, indent = 2)
-
-print("last task done in", time.time()-startTime)
-print("unique users:",uniqueUsers)
-print("skipped users:",usersSeenTwice)
