@@ -8,3 +8,4 @@ elif choice == "2":
 	findUser.main()
 else:
 	print("haha poop")
+input("poop press enter")

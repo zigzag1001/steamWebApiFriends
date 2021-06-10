@@ -5,7 +5,7 @@ import time
 
 # file path for steam id jsons
 filePath = "./people/"
-
+key = ""
 startTime = time.time()
 seenUsers = []
 usersSeenTwice = 0
@@ -13,9 +13,10 @@ uniqueUsers = 0
 
 def main():
 	# id = "76561198967207139"
+	global key
 	key = input("api key:\n")
 	id = input("id: ")
-	
+
 	print("started")
 	
 	# generates initial json file with friends of input id
@@ -26,7 +27,7 @@ def main():
 	with open(filePath + id + ".json", "w") as file:
 		json.dump(toDump, file, indent = 2)
 	
-	input("press enter to continue to big boi")
+	# input("press enter to continue to big boi")
 	print("started big boi")
 	
 	toDump = getFoFoF(id)

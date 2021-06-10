@@ -9,21 +9,22 @@ def main():
 		fleNum += 1
 	file = people[int(input("\nfile number: "))]
 	output = checkIfThere(id, file)
-	print(output)
+	for id in output:
+		print(id, end="->")
 
 def checkIfThere(idToSearch,fileName):
 	with open("./people/"+fileName) as f:
 		file = json.load(f)
 		mainName = fileName.strip(".json")
 		if idToSearch in file:
-			return mainName + " -> " + idToSearch
+			return [mainName, idToSearch]
 		for id in file:
 			if idToSearch in file[id]:
-				return mainName + " -> " + id + " -> " + idToSearch
+				return [mainName, id, idToSearch]
 		for id in file:
 			for idd in file[id]:
 				if idToSearch in file[id][idd]:
-					return mainName + " -> " + id + " -> " + idd + " -> " + idToSearch
-	return "nothing found?"
+					return [mainName, id, idd, idToSearch]
+	return ["Not Found"]
 				
 # print(checkIfThere("76561198199384013", "76561198967207139-300k.json"))
